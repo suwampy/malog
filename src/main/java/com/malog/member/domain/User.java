@@ -83,5 +83,7 @@ public class User extends AbstractAggregateRoot {
     private void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
         this.emailCheckTokenGeneratedAt = LocalDateTime.now();
+        registerEvent(new RegisteredAccountEvent(this));
+    }
     }
 }
