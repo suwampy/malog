@@ -73,4 +73,15 @@ public class User extends AbstractAggregateRoot {
         this.name = name;
         this.roles = Set.of(UserRole.USER);
     }
+
+    public static User register(String email, String password, String username) {
+        User user = new User(email, password, username);
+        user.generateEmailCheckToken();
+        return user;
+    }
+
+    private void generateEmailCheckToken() {
+        this.emailCheckToken = UUID.randomUUID().toString();
+        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
+    }
 }
