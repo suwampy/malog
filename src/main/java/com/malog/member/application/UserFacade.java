@@ -25,4 +25,12 @@ public class UserFacade {
         account.pollAllEvents().forEach(publisher::publishEvent);
     }
 
+    public void confirm(RegisterConfirm cmd) throws Exception {
+        var account = registerProcessor.registerConfirm(cmd.token(), cmd.email());
+        assert account != null;
+        account.pollAllEvents().forEach(publisher::publishEvent);
+    }
+
+
+
 }

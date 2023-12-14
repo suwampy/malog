@@ -21,4 +21,15 @@ public class UserRegisterProcessor {
 
         return account;
     }
+
+    public User registerConfirm(String token, String email) throws Exception {
+        var account = userRepository.findByEmail(email);
+        if (!account.isValidToken(token)) {
+            throw new Exception("토큰정보가 올바르지 않습니다");
+        }
+
+        account.completeRegister();
+        userRepository.save(account);
+        return account;
+    }
 }

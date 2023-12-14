@@ -25,4 +25,10 @@ public final class UserApi {
             request.password(),
             request.username()));
     }
+
+    @PostMapping(value = "/api/v1/auth/confirm",
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public void confirm(@RequestBody @Valid RegisterConfirmReq request) throws Exception {
+        accountFacade.confirm(new RegisterConfirm(request.token(), request.email()));
+    }
 }

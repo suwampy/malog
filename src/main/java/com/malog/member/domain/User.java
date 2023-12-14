@@ -85,5 +85,13 @@ public class User extends AbstractAggregateRoot {
         this.emailCheckTokenGeneratedAt = LocalDateTime.now();
         registerEvent(new RegisteredAccountEvent(this));
     }
+
+    public void completeRegister() {
+        this.emailVerified = true;
+        this.joinedAt = LocalDateTime.now();
+    }
+
+    public boolean isValidToken(String token) {
+        return this.emailCheckToken.equals(token);
     }
 }
