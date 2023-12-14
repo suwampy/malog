@@ -89,6 +89,7 @@ public class User extends AbstractAggregateRoot {
     public void completeRegister() {
         this.emailVerified = true;
         this.joinedAt = LocalDateTime.now();
+        registerEvent(new RegisterCompletedEvent(this));
     }
 
     public boolean isValidToken(String token) {

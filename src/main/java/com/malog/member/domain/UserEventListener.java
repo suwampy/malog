@@ -18,4 +18,9 @@ public class UserEventListener {
     public void registerEventListener(RegisteredAccountEvent registeredAccountEvent) {
         log.info("email : {} 회원 등록", registeredAccountEvent.getEmail());
     }
+
+    @EventListener
+    public void registerEventListener(RegisterCompletedEvent registerCompletedEvent) {
+        log.info("uKey : {} 회원 등록 완료", registerCompletedEvent.getuKey());
+    }
 }
