@@ -1,22 +1,25 @@
 package com.malog.member.application;
 
 import com.malog.member.application.command.RegisterConfirm;
+import com.malog.member.application.command.UserLogin;
 import com.malog.member.application.command.UserRegister;
-import com.malog.member.domain.User;
+import com.malog.member.domain.UserLoginProcessor;
 import com.malog.member.domain.UserRegisterProcessor;
-import com.malog.member.domain.UserRepository;
-import java.util.Optional;
+import com.malog.member.infra.jwt.TokenGenerator;
+import com.malog.member.infra.jwt.TokenReIssuer;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionTemplate;
 
 @Service
-@AllArgsConstructor
-public class UserFacade {
+@RequiredArgsConstructor
+public final class UserFacade {
 
     private final UserRegisterProcessor registerProcessor;
+    private final UserLoginProcessor userLoginProcessor;
+    private final TokenGenerator tokenGenerator;
+    private final TokenReIssuer tokenReIssuer;
     private final ApplicationEventPublisher publisher;
 
     public void register(UserRegister cmd) {
@@ -31,6 +34,11 @@ public class UserFacade {
         account.pollAllEvents().forEach(publisher::publishEvent);
     }
 
+    public Token login(UserLogin cmd) {
+        var user = userLoginProcessor.login(cmd.email(), cmd.password());
+        var tokens = tokenGenerator.generate(user.getEmail(), user.getRoles());
+        return new Token(tokens.accessToken(), tokens.refreshToken());
+    }
 
-
+    public record Token(String accessToken, String refreshToken) {}
 }
