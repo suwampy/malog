@@ -7,3 +7,8 @@ spring:
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+jwt:
+  expiration: 1800
+  refreshTokenExpiration: 604800
+  tokenIssuer: suwanyu
+  base64TokenKey: EgNynBMjxvq4q6bjgRRsLjwOQnDwBXTq

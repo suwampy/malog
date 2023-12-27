@@ -1,6 +1,7 @@
 package com.malog.member.domain;
 
-import lombok.AllArgsConstructor;
+import com.malog.member.infra.jpa.JpaUserRepository;
+import com.malog.member.infra.jpa.UserRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class UserRegisterProcessor {
-    private final UserRepository userRepository;
+    private final UserRepositoryAdapter userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public User register(String email, String password, String username) {
@@ -25,7 +26,7 @@ public class UserRegisterProcessor {
     public User registerConfirm(String token, String email) throws Exception {
         var account = userRepository.findByEmail(email);
         if (!account.isValidToken(token)) {
-            throw new Exception("토큰정보가 올바르지 않습니다");
+            throw new Exception("이메일 토큰정보가 올바르지 않습니다");
         }
 
         account.completeRegister();
