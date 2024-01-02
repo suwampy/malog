@@ -16,9 +16,9 @@ public final class TokenReIssuer {
     private final UserRepository userRepository;
 
     public Tokens reIssuance(String payload) {
-        var rawToken = tokenExtractor.extract(payload)
-            .orElseThrow(IllegalArgumentException::new);
-        var token = tokenParser.parse(rawToken);
+//        var rawToken = tokenExtractor.extract(payload)
+//            .orElseThrow(IllegalArgumentException::new);
+        var token = tokenParser.parse(payload);
 
         token.verify(Scopes.REFRESH_TOKEN.authority());
 
