@@ -39,8 +39,8 @@ public final class TokenGenerator {
     private String base64TokenKey;
 
     public Tokens generate(String email, Set<UserRole> roles) {
-        String accessToken = createToken(email, roles, false);
-        String refreshToken = createToken(email, roles, true);
+        String accessToken = createToken(email, roles, true);
+        String refreshToken = createToken(email, roles, false);
         return new Tokens(accessToken, refreshToken);
     }
 
