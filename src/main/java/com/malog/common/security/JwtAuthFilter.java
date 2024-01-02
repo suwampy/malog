@@ -2,7 +2,6 @@ package com.malog.common.security;
 
 import com.malog.member.domain.UserRepository;
 import com.malog.member.domain.UserRole;
-import com.malog.member.infra.jpa.UserRepositoryAdapter;
 import com.malog.member.infra.jwt.TokenExtractor;
 import com.malog.member.infra.jwt.TokenParser;
 import jakarta.servlet.FilterChain;
@@ -25,7 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public final class JwtAuthFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private final UserRepositoryAdapter userRepository;
+    private final UserRepository userRepository;
     private final TokenExtractor tokenExtractor;
     private final TokenParser tokenParser;
 

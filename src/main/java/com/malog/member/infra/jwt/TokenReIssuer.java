@@ -2,8 +2,6 @@ package com.malog.member.infra.jwt;
 
 import com.malog.member.domain.Tokens;
 import com.malog.member.domain.UserRepository;
-import com.malog.member.infra.jpa.UserRepositoryAdapter;
-import com.malog.member.infra.jwt.vo.RawToken;
 import com.malog.member.infra.jwt.vo.Scopes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,7 +13,7 @@ public final class TokenReIssuer {
     private final TokenExtractor tokenExtractor;
     private final TokenParser tokenParser;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final UserRepositoryAdapter userRepository;
+    private final UserRepository userRepository;
 
     public Tokens reIssuance(String payload) {
         var rawToken = tokenExtractor.extract(payload)

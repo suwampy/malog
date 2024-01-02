@@ -1,7 +1,5 @@
 package com.malog.member.domain;
 
-import com.malog.member.infra.jpa.JpaUserRepository;
-import com.malog.member.infra.jpa.UserRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -9,7 +7,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class UserRegisterProcessor {
-    private final UserRepositoryAdapter userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public User register(String email, String password, String username) {
