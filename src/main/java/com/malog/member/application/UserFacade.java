@@ -3,6 +3,7 @@ package com.malog.member.application;
 import com.malog.member.application.command.RegisterConfirm;
 import com.malog.member.application.command.UserLogin;
 import com.malog.member.application.command.UserRegister;
+import com.malog.member.domain.Tokens;
 import com.malog.member.domain.UserLoginProcessor;
 import com.malog.member.domain.UserRegisterProcessor;
 import com.malog.member.infra.jwt.TokenGenerator;
@@ -40,5 +41,12 @@ public final class UserFacade {
         return new Token(tokens.accessToken(), tokens.refreshToken());
     }
 
-    public record Token(String accessToken, String refreshToken) {}
+    public Token reissue(String token) {
+        var tokens = tokenReIssuer.reIssuance(token);
+        return new Token(tokens.accessToken(), tokens.refreshToken());
+    }
+
+    public record Token(String accessToken, String refreshToken) {
+
+    }
 }
