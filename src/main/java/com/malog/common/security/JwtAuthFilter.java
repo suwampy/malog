@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,7 +37,7 @@ public final class JwtAuthFilter extends OncePerRequestFilter {
 
             if (SecurityContextHolder.getContext().getAuthentication() == null) {
                 var context = new UsernamePasswordAuthenticationToken(
-                    new AuthenticatedUser(account.getUKey(), account.getRoles()), null,
+                    new AuthenticatedUser(account.getUniqueKey(), account.getRoles()), null,
                     authorities(account.getRoles()));
                 SecurityContextHolder.getContext().setAuthentication(context);
             }
