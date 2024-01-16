@@ -2,7 +2,6 @@ package com.malog.member.infra.jpa;
 
 import com.malog.member.domain.User;
 import com.malog.member.domain.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +13,11 @@ public final class UserRepositoryAdapter implements UserRepository {
 
     public void save(User user) {
         jpaUserRepository.save(user);
+    }
+
+    @Override
+    public User findByUniqueKey(String uKey) {
+        return jpaUserRepository.findByUniqueKey(uKey);
     }
 
     @Override
