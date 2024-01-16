@@ -1,5 +1,7 @@
-package com.malog.member.domain;
+package com.malog.member.domain.service;
 
+import com.malog.member.domain.User;
+import com.malog.member.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
