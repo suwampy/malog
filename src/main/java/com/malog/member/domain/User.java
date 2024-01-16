@@ -2,6 +2,8 @@ package com.malog.member.domain;
 
 import com.malog.common.KeyGenerator;
 import com.malog.common.domain.AbstractAggregateRoot;
+import com.malog.member.domain.event.RegisterCompletedEvent;
+import com.malog.member.domain.event.RegisteredAccountEvent;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -28,7 +30,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Getter
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class User extends AbstractAggregateRoot {
     private static final String PREFIX = "user_";
 
@@ -38,7 +40,7 @@ public class User extends AbstractAggregateRoot {
     private Long id;
 
     @Column(name = "unique_key")
-    private String uKey;
+    private String uniqueKey;
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -67,7 +69,7 @@ public class User extends AbstractAggregateRoot {
     private Set<UserRole> roles = new HashSet<>();
 
     private User(String email, String password, String name) {
-        this.uKey = KeyGenerator.generate(PREFIX);
+        this.uniqueKey = KeyGenerator.generate(PREFIX);
         this.email = email;
         this.password = password;
         this.name = name;

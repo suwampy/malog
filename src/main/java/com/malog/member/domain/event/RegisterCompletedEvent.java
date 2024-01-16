@@ -1,6 +1,7 @@
-package com.malog.member.domain;
+package com.malog.member.domain.event;
 
 import com.malog.common.domain.DomainEvent;
+import com.malog.member.domain.User;
 import java.time.LocalDateTime;
 
 public final class RegisterCompletedEvent implements DomainEvent {
@@ -9,7 +10,7 @@ public final class RegisterCompletedEvent implements DomainEvent {
     private final LocalDateTime occurredOn;
 
     public RegisterCompletedEvent(User user) {
-        this.uKey = user.getUKey();
+        this.uKey = user.getUniqueKey();
         this.occurredOn = LocalDateTime.now();
     }
 
