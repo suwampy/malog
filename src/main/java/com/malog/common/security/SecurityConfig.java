@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,17 +32,17 @@ public class SecurityConfig {
 
     @Bean
     protected SecurityFilterChain config(HttpSecurity http) throws Exception {
-
         http.csrf(AbstractHttpConfigurer::disable).sessionManagement(
                 sessionManagement -> sessionManagement
                     .sessionCreationPolicy(
                     SessionCreationPolicy.STATELESS))
             .exceptionHandling(
-                exceptionHandle -> exceptionHandle.authenticationEntryPoint(authenticationEntryPoint)
+                exceptionHandle -> exceptionHandle
+                    .authenticationEntryPoint(authenticationEntryPoint)
                     .accessDeniedHandler(accessDeniedHandler))
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll())
+                .anyRequest().authenticated())
             .addFilterBefore(filterChainExceptionHelper, LogoutFilter.class)
             .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
