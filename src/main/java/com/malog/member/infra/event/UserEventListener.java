@@ -30,8 +30,7 @@ public class UserEventListener {
     @EventListener
     public void registerEventListener(RegisterCompletedEvent event) {
         log.info("uKey : {} 회원 등록 완료", event.getuKey());
-        publisher.publishEvent(
-            new RegisterCompletedNotiEvent(event.getuKey(), event.occurredOn())
-        );
+        publisher.publishEvent(new RegisterCompletedNotiEvent(event.getuKey(), event.occurredOn()));
+        publisher.publishEvent(new BlogInitializedEvent(event.getuKey(), event.occurredOn()));
     }
 }
