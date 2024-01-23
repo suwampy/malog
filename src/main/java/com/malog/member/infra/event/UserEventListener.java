@@ -1,5 +1,6 @@
 package com.malog.member.infra.event;
 
+import com.malog.blog.domain.event.BlogInitializedEvent;
 import com.malog.member.domain.event.RegisterCompletedEvent;
 import com.malog.member.domain.event.RegisteredAccountEvent;
 import com.malog.notification.domain.event.RegisterCompletedNotiEvent;

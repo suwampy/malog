@@ -1,5 +1,7 @@
 package com.malog.member.infra.jwt;
 
+import com.malog.common.error.InvalidTokenException;
+import com.malog.member.infra.exception.AlreadyTokenExpiredException;
 import com.malog.member.infra.jwt.vo.RawToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -28,10 +30,10 @@ public final class TokenParser {
             return createRawToken(jwt.getBody());
         } catch (UnsupportedJwtException | MalformedJwtException | IllegalArgumentException ex) {
             log.error("Invalid JWT Token", ex);
-            throw new IllegalArgumentException();
+            throw new InvalidTokenException();
         } catch (ExpiredJwtException expiredEx) {
             log.info("JWT Token is expired", expiredEx);
-            throw new IllegalArgumentException();
+            throw new AlreadyTokenExpiredException();
         }
     }
 
