@@ -1,6 +1,7 @@
 package com.malog.member.domain.service;
 
 import com.malog.common.error.InvalidTokenException;
+import com.malog.common.security.PasswordEncrypter;
 import com.malog.member.domain.User;
 import com.malog.member.domain.UserRepository;
 import com.malog.member.infra.exception.DuplicatedEmailException;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserRegisterProcessor {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncrypter passwordEncoder;
 
     public User register(String email, String password, String username) {
         if (userRepository.existsByEmail(email)) {
