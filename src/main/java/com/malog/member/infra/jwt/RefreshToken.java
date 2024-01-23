@@ -1,5 +1,6 @@
 package com.malog.member.infra.jwt;
 
+import com.malog.member.infra.exception.AlreadyTokenExpiredException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +38,7 @@ public class RefreshToken {
 
     public void expire() {
         if (this.expired) {
-            throw new IllegalArgumentException();
+            throw new AlreadyTokenExpiredException();
         }
         this.expired = true;
     }

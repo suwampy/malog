@@ -2,6 +2,7 @@ package com.malog.member.infra.jwt;
 
 import com.malog.member.domain.Tokens;
 import com.malog.member.domain.UserRepository;
+import com.malog.member.infra.exception.RefreshTokenNotFoundException;
 import com.malog.member.infra.jwt.vo.Scopes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,14 +17,12 @@ public final class TokenReIssuer {
     private final UserRepository userRepository;
 
     public Tokens reIssuance(String payload) {
-//        var rawToken = tokenExtractor.extract(payload)
-//            .orElseThrow(IllegalArgumentException::new);
         var token = tokenParser.parse(payload);
 
         token.verify(Scopes.REFRESH_TOKEN.authority());
 
         if (!refreshTokenRepository.existsByRefreshTokenJti(token.getJti())) {
-            throw new IllegalArgumentException();
+            throw new RefreshTokenNotFoundException();
         }
 
         var account = userRepository.findByEmail(token.getSubject());

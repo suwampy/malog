@@ -1,5 +1,7 @@
 package com.malog.member.infra.jpa;
 
+import com.malog.common.error.ErrorCode;
+import com.malog.common.error.ResourceNotFoundException;
 import com.malog.member.domain.User;
 import com.malog.member.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public final class UserRepositoryAdapter implements UserRepository {
 
     @Override
     public User findByEmail(String email) {
-        return jpaUserRepository.findByEmail(email);
+        return jpaUserRepository.findByEmail(email)
+            .orElseThrow(() -> new ResourceNotFoundException(ErrorCode.ACCOUNT_NOT_FOUND));
     }
 }

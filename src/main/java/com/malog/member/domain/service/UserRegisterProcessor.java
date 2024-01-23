@@ -1,7 +1,9 @@
 package com.malog.member.domain.service;
 
+import com.malog.common.error.InvalidTokenException;
 import com.malog.member.domain.User;
 import com.malog.member.domain.UserRepository;
+import com.malog.member.infra.exception.DuplicatedEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,7 @@ public class UserRegisterProcessor {
 
     public User register(String email, String password, String username) {
         if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("중복된 이메일이 존재합니다.");
+            throw new DuplicatedEmailException();
         }
 
         var account = User.register(email, passwordEncoder.encode(password), username);
@@ -23,10 +25,10 @@ public class UserRegisterProcessor {
         return account;
     }
 
-    public User registerConfirm(String token, String email) throws Exception {
+    public User registerConfirm(String token, String email) {
         var account = userRepository.findByEmail(email);
         if (!account.isValidToken(token)) {
-            throw new Exception("이메일 토큰정보가 올바르지 않습니다");
+            throw new InvalidTokenException();
         }
 
         account.completeRegister();

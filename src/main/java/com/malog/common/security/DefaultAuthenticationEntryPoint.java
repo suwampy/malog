@@ -1,6 +1,7 @@
 package com.malog.common.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.malog.common.error.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,6 +26,6 @@ public final class DefaultAuthenticationEntryPoint implements AuthenticationEntr
         AuthenticationException authException) throws IOException, ServletException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         var outputStream = response.getOutputStream();
-        objectMapper.writeValue(outputStream, "인증에 실패하였습니다.");
+        objectMapper.writeValue(outputStream, ErrorCode.UN_AUTHENTICATED);
     }
 }
