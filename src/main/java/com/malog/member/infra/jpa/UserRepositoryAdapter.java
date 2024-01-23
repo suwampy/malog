@@ -13,8 +13,8 @@ public final class UserRepositoryAdapter implements UserRepository {
 
     private final JpaUserRepository jpaUserRepository;
 
-    public void save(User user) {
-        jpaUserRepository.save(user);
+    public User save(User user) {
+        return jpaUserRepository.save(user);
     }
 
     @Override
